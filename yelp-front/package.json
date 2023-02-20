@@ -1,5 +1,6 @@
 {
   "name": "yelp-front",
+  "proxy": "http://localhost:5000",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,5 +16,8 @@
     "next": "13.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3"
   }
 }
