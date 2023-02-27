@@ -8,7 +8,8 @@ mongoose.connect('mongodb://localhost:27017/yelp-camp', { useNewUrlParser: true,
   .then(() => console.log('SEEDER HAS BEEN EXECUTED'))
   .catch(error => console.error('ERROR TRYING TO CONNECT MONGOOSE TO DATABASE', error));
 
-const sample = (arr) => {arr[Math.floor(Math.random() * arr.length)]}
+const sample = (arr) => arr[Math.floor(Math.random() * arr.length)]
+
 
 const seeder = async () => {
     await Campground.deleteMany()
