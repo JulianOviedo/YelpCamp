@@ -19,9 +19,3 @@ app.use(cors())
 app.listen(5000, (req, res) => {
     console.log('server listen on port 5000')
 })
-
-app.get('/makecampground', async (req, res) => {
-    const camp = new Campground({title:'my first campground'})
-    await camp.save()
-    res.send(camp)
-})
