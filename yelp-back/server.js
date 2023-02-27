@@ -24,3 +24,9 @@ app.get('/campgrounds', async (req, res) => {
   const campgrounds = await Campground.find({})
   res.send(campgrounds)
 })
+
+
+app.get('/campgrounds/:_id', async (req, res ) => {
+  const campground = await Campground.findById(req.params._id)
+  res.send({campground})
+})

@@ -1,6 +1,7 @@
 import getCampgrounds from "@/helpers/getCampgrouds"
+import Link from "next/link"
 
-// const BASE_URL = 'http://localhost:5000'
+const BASE_URL = 'http://localhost:5000'
 
 export async function getServerSideProps() {
   const campgrounds = await getCampgrounds()
@@ -19,11 +20,13 @@ export default function Home({ campgrounds }) {
       <h1>All Campgrounds</h1>
       <div>
         <ul>
-        {campgrounds.map(camp => (
-            <li key={camp.id}>
-              <h2>{camp.title}</h2>
-              <p>{camp.location}</p>
-            </li>
+          {campgrounds.map(camp => (
+            <Link key={camp._id} href={`/campgrounds/${camp._id}`}>
+              <li >
+                <h2>{camp.title}</h2>
+                <p>{camp.location}</p>
+              </li>
+            </Link>
           ))}
         </ul>
       </div>
