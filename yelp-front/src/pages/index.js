@@ -1,15 +1,35 @@
-import { useEffect } from "react"
+import getCampgrounds from "@/helpers/getCampgrouds"
 
-const BASE_URL = 'http://localhost:5000'
+// const BASE_URL = 'http://localhost:5000'
 
-export default function Home() {
-  useEffect(() => {
-    fetch(`${BASE_URL}/api`).then(res => console.log(res))
-  }, [])
+export async function getServerSideProps() {
+  const campgrounds = await getCampgrounds()
+  return {
+    props: {
+      campgrounds
+    }
+  }
+}
 
+
+export default function Home({ campgrounds }) {
+
+  console.log(campgrounds)
   return (
     <>
-      <h1>hello yelp !</h1>
+      <h1>All Campgrounds</h1>
+      <div>
+        <ul>
+          {campgrounds.map(camp => {
+            <>
+              <li>
+                <h2>camp.title</h2>
+                <p>camp.description</p>
+              </li>
+            </>
+          })}
+        </ul>
+      </div>
     </>
   )
 }
