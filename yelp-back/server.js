@@ -19,3 +19,8 @@ app.use(cors())
 app.listen(5000, (req, res) => {
     console.log('server listen on port 5000')
 })
+
+app.get('/campgrounds', async (req, res) => {
+  const campgrounds = await Campground.find({})
+  res.send(campgrounds)
+})
