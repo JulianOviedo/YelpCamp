@@ -14,20 +14,17 @@ export async function getServerSideProps() {
 
 export default function Home({ campgrounds }) {
 
-  console.log(campgrounds)
   return (
     <>
       <h1>All Campgrounds</h1>
       <div>
         <ul>
-          {campgrounds.map(camp => {
-            <>
-              <li>
-                <h2>camp.title</h2>
-                <p>camp.description</p>
-              </li>
-            </>
-          })}
+        {campgrounds.map(camp => (
+            <li key={camp.id}>
+              <h2>{camp.title}</h2>
+              <p>{camp.location}</p>
+            </li>
+          ))}
         </ul>
       </div>
     </>
