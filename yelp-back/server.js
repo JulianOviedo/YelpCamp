@@ -10,7 +10,7 @@ mongoose.connect('mongodb://localhost:27017/yelp-camp', { useNewUrlParser: true,
 
 
 
-///------****  EXPRESS  ***--------------////
+///------****  EXPRESS  ***--------////
 
 const app = express()
 
