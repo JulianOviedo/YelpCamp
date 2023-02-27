@@ -4,7 +4,7 @@ import cors from 'cors'
 import mongoose from 'mongoose'
 import Campground from './models/campground.js';
 
-mongoose.connect('mongodb://localhost:27017/nombre-de-tu-base-de-datos', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb://localhost:27017/yelp-camp', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('DATABASE IS CONNECTED'))
   .catch(error => console.error('ERROR TRYING TO CONNECT MONGOOSE TO DATABASE', error));
 
