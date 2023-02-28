@@ -1,7 +1,8 @@
 import axios from "axios";
+import Link from "next/link";
 import { useEffect, useState } from "react"
 
-export default function ShowCampground({_id}) {
+export default function ShowCampground({ _id }) {
     const [campground, setCampground] = useState([])
 
     useEffect(() => {
@@ -16,10 +17,12 @@ export default function ShowCampground({_id}) {
     return (
         <>
             {campground && (
-            <div key={campground.id}>
-                <h1>{campground.title}</h1>
-                <p>{campground.location}</p>
-            </div>)}
+                <div key={campground.id}>
+                    <h1>{campground.title}</h1>
+                    <p>{campground.location}</p>
+                </div>
+            )}
+            <Link href='/'>Back to Home</Link>
         </>
     )
 }

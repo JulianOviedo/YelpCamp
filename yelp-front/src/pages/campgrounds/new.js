@@ -1,3 +1,4 @@
+
 export default function NewCampground() {
 
     const BASE_URL = 'http://localhost:5000'
@@ -14,6 +15,7 @@ export default function NewCampground() {
                 </label>
                 <button type="submit">Add Campground</button>
             </form>
+
         </>
     )
 }
