@@ -23,6 +23,8 @@ export default function ShowCampground({ _id }) {
                 </div>
             )}
             <Link href='/'>Back to Home</Link>
+            <Link href={`/campgrounds/${_id}/edit`}>Edit Campground</Link>
+
         </>
     )
 }

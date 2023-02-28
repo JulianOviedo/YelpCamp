@@ -1,6 +1,7 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
+import methodOverride from 'method-override'
 
 import mongoose from 'mongoose'
 import Campground from './models/campground.js';
@@ -18,6 +19,7 @@ const app = express()
 
 app.use(cors())
 app.use(bodyParser.urlencoded({extended: true}))
+app.use(methodOverride('_method'))
 
 app.listen(5000, (req, res) => {
     console.log('server listen on port 5000')
@@ -34,7 +36,16 @@ app.post('/campgrounds', async (req, res) => {
   res.redirect(`${BASE_URL}/campgrounds/${newCampground._id}`)
 })
 
+
 app.get('/campgrounds/:_id', async (req, res ) => {
   const campground = await Campground.findById(req.params._id)
   res.send({campground})
+})
+
+app.put('/campgrounds/:_id', async (req,res) => {
+  const {_id} = req.params
+  console.log(_id)
+  console.log(req.body.campground)
+  await Campground.findByIdAndUpdate(_id, {...req.body.campground})
+  res.redirect(`${BASE_URL}/campgrounds/${_id}`)
 })
