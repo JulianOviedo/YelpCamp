@@ -3,7 +3,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react"
 
 export default function ShowCampground({ _id }) {
-    const [campground, setCampground] = useState([])
+    const [campground, setCampground] = useState({})
+
+    const BASE_URL = 'http://localhost:5000'
+
 
     useEffect(() => {
         const fetchCampgroundDetails = async () => {
@@ -11,7 +14,7 @@ export default function ShowCampground({ _id }) {
             setCampground(res.data.campground)
         }
         fetchCampgroundDetails()
-    }, [])
+    }, [_id])
 
 
     return (
@@ -22,6 +25,9 @@ export default function ShowCampground({ _id }) {
                     <p>{campground.location}</p>
                 </div>
             )}
+            <form action={`${BASE_URL}/campgrounds/${_id}?_method=DELETE`} method='POST'>
+                <button type="submit">Delete Campground</button>
+            </form>
             <Link href='/'>Back to Home</Link>
             <Link href={`/campgrounds/${_id}/edit`}>Edit Campground</Link>
 

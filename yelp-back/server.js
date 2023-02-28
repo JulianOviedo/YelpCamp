@@ -47,3 +47,10 @@ app.put('/campgrounds/:_id', async (req,res) => {
   await Campground.findByIdAndUpdate(_id, {...req.body.campground})
   res.redirect(`${BASE_URL}/campgrounds/${_id}`)
 })
+
+app.delete('/campgrounds/:_id', async (req,res) => {
+  const {_id} = req.params
+  console.log('LLEGO BICHO')
+  await Campground.findByIdAndDelete(_id)
+  res.redirect(`${BASE_URL}/`)
+})
