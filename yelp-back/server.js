@@ -50,7 +50,6 @@ app.put('/campgrounds/:_id', async (req,res) => {
 
 app.delete('/campgrounds/:_id', async (req,res) => {
   const {_id} = req.params
-  console.log('LLEGO BICHO')
   await Campground.findByIdAndDelete(_id)
   res.redirect(`${BASE_URL}/`)
 })
