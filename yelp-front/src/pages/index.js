@@ -18,6 +18,7 @@ export default function Home({ campgrounds }) {
   return (
     <>
       <h1>All Campgrounds</h1>
+      <Link href='/campgrounds/new'>Add Campground</Link>
       <div>
         <ul>
           {campgrounds.map(camp => (

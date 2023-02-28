@@ -1,3 +1,4 @@
+import Link from "next/link"
 
 export default function NewCampground() {
 
@@ -15,7 +16,7 @@ export default function NewCampground() {
                 </label>
                 <button type="submit">Add Campground</button>
             </form>
-
+            <Link href='/'>Back to Home</Link>
         </>
     )
 }
