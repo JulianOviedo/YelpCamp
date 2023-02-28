@@ -1,16 +1,13 @@
-import { useRouter } from "next/router";
 import axios from "axios";
 import { useEffect, useState } from "react"
 
-export default function ShowCampground() {
+export default function ShowCampground({_id}) {
     const [campground, setCampground] = useState([])
 
-    const router = useRouter();
-    const { _id } = router.query;
     useEffect(() => {
         const fetchCampgroundDetails = async () => {
             const res = await axios.get(`http://localhost:5000/campgrounds/${_id}`)
-            await setCampground(res.data.campground)
+            setCampground(res.data.campground)
         }
         fetchCampgroundDetails()
     }, [])
@@ -18,7 +15,6 @@ export default function ShowCampground() {
 
     return (
         <>
-            <h1>Test by ID</h1>
             {campground && (
             <div key={campground.id}>
                 <h1>{campground.title}</h1>
@@ -26,4 +22,10 @@ export default function ShowCampground() {
             </div>)}
         </>
     )
+}
+
+
+ShowCampground.getInitialProps = async ({ query }) => {
+    const { _id } = query
+    return { _id }
 }
