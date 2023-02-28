@@ -1,4 +1,5 @@
 import express from 'express'
+import bodyParser from 'body-parser'
 import cors from 'cors'
 
 import mongoose from 'mongoose'
@@ -12,9 +13,11 @@ mongoose.connect('mongodb://localhost:27017/yelp-camp', { useNewUrlParser: true,
 
 ///------****  EXPRESS  ***--------////
 
+const BASE_URL = 'http://localhost:3000'
 const app = express()
 
 app.use(cors())
+app.use(bodyParser.urlencoded({extended: true}))
 
 app.listen(5000, (req, res) => {
     console.log('server listen on port 5000')
@@ -25,6 +28,11 @@ app.get('/campgrounds', async (req, res) => {
   res.send(campgrounds)
 })
 
+app.post('/campgrounds', async (req, res) => {
+  const newCampground = new Campground(req.body.campground)
+  await newCampground.save()
+  res.redirect(`${BASE_URL}/campgrounds/${newCampground._id}`)
+})
 
 app.get('/campgrounds/:_id', async (req, res ) => {
   const campground = await Campground.findById(req.params._id)
