@@ -44,8 +44,6 @@ app.get('/campgrounds/:_id', async (req, res ) => {
 
 app.put('/campgrounds/:_id', async (req,res) => {
   const {_id} = req.params
-  console.log(_id)
-  console.log(req.body.campground)
   await Campground.findByIdAndUpdate(_id, {...req.body.campground})
   res.redirect(`${BASE_URL}/campgrounds/${_id}`)
 })
