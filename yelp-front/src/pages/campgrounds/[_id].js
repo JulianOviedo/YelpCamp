@@ -20,7 +20,9 @@ export default function ShowCampground({ _id }) {
             {campground && (
                 <div key={campground.id}>
                     <h1>{campground.title}</h1>
-                    <p>{campground.location}</p>
+                    <h2>{campground.location}</h2>
+                    <img src={campground.image} width={800} height={500} alt='campgroundImg'></img>
+                    <p>{campground.description}</p>
                 </div>
             )}
             <form action={`${BASE_URL}/campgrounds/${_id}?_method=DELETE`} method='POST'>

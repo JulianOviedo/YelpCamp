@@ -1,4 +1,3 @@
-import MainLayout from '@/components/MainLayout'
 import getCampgrounds from '@/helpers/getCampgrouds'
 import Link from 'next/link'
 
@@ -15,7 +14,7 @@ export async function getServerSideProps() {
 
 export default function Home({ campgrounds }) {
     return (
-        <MainLayout>
+        <>
             <h1>All Campgrounds</h1>
             <Link href='/campgrounds/new'>Add Campground</Link>
             <div>
@@ -30,6 +29,6 @@ export default function Home({ campgrounds }) {
                     ))}
                 </ul>
             </div>
-        </MainLayout>
+        </>
     )
 }
