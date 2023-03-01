@@ -21,6 +21,7 @@ export default function ShowCampground({ _id }) {
                 <div key={campground.id}>
                     <h1>{campground.title}</h1>
                     <h2>{campground.location}</h2>
+                    <h3>{'$' + campground.price}</h3>
                     <img src={campground.image} width={800} height={500} alt='campgroundImg'></img>
                     <p>{campground.description}</p>
                 </div>
