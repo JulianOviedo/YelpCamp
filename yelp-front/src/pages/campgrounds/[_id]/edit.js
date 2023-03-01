@@ -1,6 +1,6 @@
-import axios from "axios";
-import Link from "next/link";
-import { useEffect, useState } from "react"
+import axios from 'axios'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 export default function EditCampground({ _id }) {
     const [campground, setCampground] = useState({})
@@ -31,7 +31,6 @@ export default function EditCampground({ _id }) {
         </>
     )
 }
-
 
 EditCampground.getInitialProps = async ({ query }) => {
     const { _id } = query

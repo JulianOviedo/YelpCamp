@@ -1,12 +1,11 @@
-import axios from "axios";
-import Link from "next/link";
-import { useEffect, useState } from "react"
+import axios from 'axios'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 export default function ShowCampground({ _id }) {
     const [campground, setCampground] = useState({})
 
     const BASE_URL = 'http://localhost:5000'
-
 
     useEffect(() => {
         const fetchCampgroundDetails = async () => {
@@ -15,7 +14,6 @@ export default function ShowCampground({ _id }) {
         }
         fetchCampgroundDetails()
     }, [_id])
-
 
     return (
         <>
@@ -34,7 +32,6 @@ export default function ShowCampground({ _id }) {
         </>
     )
 }
-
 
 ShowCampground.getInitialProps = async ({ query }) => {
     const { _id } = query

@@ -1,7 +1,6 @@
-import Link from "next/link"
+import Link from 'next/link'
 
 export default function NewCampground() {
-
     const BASE_URL = 'http://localhost:5000'
 
     return (
