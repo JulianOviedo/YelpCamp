@@ -1,3 +1,4 @@
+import CampgroundCard from '@/components/CampgroundCard'
 import getCampgrounds from '@/helpers/getCampgrouds'
 import Link from 'next/link'
 
@@ -18,16 +19,15 @@ export default function Home({ campgrounds }) {
             <h1>All Campgrounds</h1>
             <Link href='/campgrounds/new'>Add Campground</Link>
             <div>
-                <ul>
-                    {campgrounds.map(camp => (
-                        <Link key={camp._id} href={`/campgrounds/${camp._id}`}>
-                            <li >
-                                <h2>{camp.title}</h2>
-                                <p>{camp.location}</p>
-                            </li>
-                        </Link>
-                    ))}
-                </ul>
+                {campgrounds.map(camp => (
+                    <CampgroundCard
+                        key={camp._id}
+                        id={camp._id}
+                        image={camp.image}
+                        title={camp.title}
+                        description={camp.description}
+                        location={camp.location} />
+                ))}
             </div>
         </>
     )
