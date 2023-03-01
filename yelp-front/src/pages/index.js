@@ -2,7 +2,7 @@ import MainLayout from '@/components/MainLayout'
 import getCampgrounds from '@/helpers/getCampgrouds'
 import Link from 'next/link'
 
-const BASE_URL = 'http://localhost:5000'
+// const BASE_URL = 'http://localhost:5000'
 
 export async function getServerSideProps() {
     const campgrounds = await getCampgrounds()

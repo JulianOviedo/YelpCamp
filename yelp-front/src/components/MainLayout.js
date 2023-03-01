@@ -1,9 +1,10 @@
+import NavBar from './NavBar'
+
 export default function MainLayout({ children }) {
     return (
         <>
-            <h1>MainLayout</h1>
+            <NavBar/>
             {children}
-            <footer>MainLayout</footer>
         </>
     )
 }
