@@ -1,5 +1,5 @@
+import EditCampgroundForm from '@/components/EditCampgroundForm'
 import axios from 'axios'
-import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 export default function EditCampground({ _id }) {
@@ -13,21 +13,17 @@ export default function EditCampground({ _id }) {
         fetchCampgroundDetails()
     }, [_id])
 
-    const BASE_URL = 'http://localhost:5000'
-
+    console.log(campground.description)
     return (
         <>
-            <h1>Edit Campground</h1>
-            <form action={`${BASE_URL}/campgrounds/${_id}?_method=PUT`} method='POST'>
-                <label htmlFor='title'> New Title
-                    <input type='text' id="title" name='campground[title]' placeholder={campground.title}></input>
-                </label>
-                <label htmlFor='location'> New Location
-                    <input type='text' id="location" name='campground[location]' placeholder={campground.location}></input>
-                </label>
-                <button type="submit">Edit Campground</button>
-            </form>
-            <Link href={`/campgrounds/${_id}`}>Go back</Link>
+            <EditCampgroundForm
+                id={campground._id}
+                imageUrl={campground.image}
+                title={campground.title}
+                description={campground.description}
+                location={campground.location}
+                price={campground.price}
+            />
         </>
     )
 }
