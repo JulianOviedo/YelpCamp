@@ -18,20 +18,31 @@ export default function ShowCampground({ _id }) {
     return (
         <>
             {campground && (
-                <div key={campground.id}>
-                    <h1>{campground.title}</h1>
-                    <h2>{campground.location}</h2>
-                    <h3>{'$' + campground.price}</h3>
-                    <img src={campground.image} width={800} height={500} alt='campgroundImg'></img>
-                    <p>{campground.description}</p>
+                <div className="row">
+                    <div className="col-6 offset-3">
+                        <div className="card mb-3">
+                            <img src={campground.image} width={800} height={350} className="card-img-top" alt="campgroundImage"/>
+                            <div className="card-body">
+                                <h5 className="card-title">{campground.title}</h5>
+                                <p className="card-text">{campground.description}</p>
+                            </div>
+                            <ul className="list-group list-group-flush">
+                                <li className="list-group-item text-muted">{campground.location}</li>
+                                <li className="list-group-item">{'$' + campground.price}</li>
+                            </ul>
+                            <div className="card-body">
+                                <Link className="card-link btn btn-info m-1" href={`/campgrounds/${_id}/edit`}>Edit</Link>
+                                <form className="d-inline" action={`${BASE_URL}/campgrounds/${_id}?_method=DELETE`} method="POST">
+                                    <button className="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                            <div className="card-footer text-muted">
+                                2 days ago
+                            </div>
+                        </div>
+                    </div>
                 </div>
             )}
-            <form action={`${BASE_URL}/campgrounds/${_id}?_method=DELETE`} method='POST'>
-                <button type="submit">Delete Campground</button>
-            </form>
-            <Link href='/'>Back to Home</Link>
-            <Link href={`/campgrounds/${_id}/edit`}>Edit Campground</Link>
-
         </>
     )
 }
