@@ -6,6 +6,7 @@ import mongoose from 'mongoose'
 
 import catchAsync from './utils/catchAsync.js'
 import Campground from './models/campground.js';
+import ExpressError from './utils/ExpressError.js'
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('DATABASE IS CONNECTED'))
@@ -55,6 +56,11 @@ app.delete('/campgrounds/:_id',catchAsync( async (req,res) => {
   res.redirect(`${BASE_URL}/`)
 }))
 
-app.use((err, req, res, next) => {
-  res.send('something goes wrong')
+app.all('*', (req, res, next) => {
+  next(new ExpressError('Page not found', 404))
 })
+
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.redirect(`${BASE_URL}/error?statusCode=${err.statusCode}&message=${err.message}&stack=${err.stack}`);
+}); 
