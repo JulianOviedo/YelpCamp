@@ -26,10 +26,10 @@ app.listen(5000, (req, res) => {
     console.log('server listen on port 5000')
 })
 
-app.get('/campgrounds', async (req, res) => {
+app.get('/campgrounds',catchAsync( async (req, res) => {
   const campgrounds = await Campground.find({})
   res.send(campgrounds)
-})
+}))
 
 app.post('/campgrounds', catchAsync( async (req, res, next) => {
   const newCampground = new Campground(req.body.campground)
@@ -38,22 +38,22 @@ app.post('/campgrounds', catchAsync( async (req, res, next) => {
 }))
 
 
-app.get('/campgrounds/:_id', async (req, res ) => {
+app.get('/campgrounds/:_id',catchAsync( async (req, res ) => {
   const campground = await Campground.findById(req.params._id)
   res.send({campground})
-})
+}))
 
-app.put('/campgrounds/:_id', async (req,res) => {
+app.put('/campgrounds/:_id',catchAsync( async (req,res) => {
   const {_id} = req.params
   await Campground.findByIdAndUpdate(_id, {...req.body.campground})
   res.redirect(`${BASE_URL}/campgrounds/${_id}`)
-})
+}))
 
-app.delete('/campgrounds/:_id', async (req,res) => {
+app.delete('/campgrounds/:_id',catchAsync( async (req,res) => {
   const {_id} = req.params
   await Campground.findByIdAndDelete(_id)
   res.redirect(`${BASE_URL}/`)
-})
+}))
 
 app.use((err, req, res, next) => {
   res.send('something goes wrong')
