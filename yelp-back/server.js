@@ -2,8 +2,9 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import methodOverride from 'method-override'
-
 import mongoose from 'mongoose'
+
+import catchAsync from './utils/catchAsync.js'
 import Campground from './models/campground.js';
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp', { useNewUrlParser: true, useUnifiedTopology: true })
@@ -30,11 +31,11 @@ app.get('/campgrounds', async (req, res) => {
   res.send(campgrounds)
 })
 
-app.post('/campgrounds', async (req, res) => {
+app.post('/campgrounds', catchAsync( async (req, res, next) => {
   const newCampground = new Campground(req.body.campground)
   await newCampground.save()
   res.redirect(`${BASE_URL}/campgrounds/${newCampground._id}`)
-})
+}))
 
 
 app.get('/campgrounds/:_id', async (req, res ) => {
@@ -52,4 +53,8 @@ app.delete('/campgrounds/:_id', async (req,res) => {
   const {_id} = req.params
   await Campground.findByIdAndDelete(_id)
   res.redirect(`${BASE_URL}/`)
+})
+
+app.use((err, req, res, next) => {
+  res.send('something goes wrong')
 })
