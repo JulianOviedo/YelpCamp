@@ -14,16 +14,25 @@ export default function EditCampgroundForm ({ id, title, location, imageUrl, pri
                         <label className="form-label" htmlFor="title">Title</label>
                         <input className="form-control" type="text" id="title" name="campground[title]"
                             value={title} onChange={onChange} required/>
+                        <div className='valid-feedback'>
+                                Looks Good!
+                        </div>
                     </div>
                     <div className="mb-3">
                         <label className="form-label" htmlFor="location">Location</label>
                         <input className="form-control" type="text" id="location" name="campground[location]"
                             value={location} onChange={onChange} required/>
+                        <div className='valid-feedback'>
+                                Looks Good!
+                        </div>
                     </div>
                     <div className="mb-3">
                         <label className="form-label" htmlFor="image">Image Url</label>
                         <input className="form-control" type="text" id="image" name="campground[image]"
                             value={imageUrl} onChange={onChange} required/>
+                        <div className='valid-feedback'>
+                                Looks Good!
+                        </div>
                     </div>
                     <div className="mb-3">
                         <label className="form-label" htmlFor="price">Campground Price</label>
@@ -31,6 +40,9 @@ export default function EditCampgroundForm ({ id, title, location, imageUrl, pri
                             <span className="input-group-text" id="price-label">$</span>
                             <input type="text" className="form-control" id="price" placeholder="0.00" aria-label="price"
                                 aria-describedby="price-label" name="campground[price]" value={price} onChange={onChange} required/>
+                            <div className='valid-feedback'>
+                                Looks Good!
+                            </div>
                         </div>
                     </div>
 
@@ -38,6 +50,9 @@ export default function EditCampgroundForm ({ id, title, location, imageUrl, pri
                         <label className="form-label" htmlFor="description">Description</label>
                         <textarea className="form-control" type="text" id="description"
                             name="campground[description]" value={description} onChange={onChange} required></textarea>
+                        <div className='valid-feedback'>
+                                Looks Good!
+                        </div>
                     </div>
                     <div className="mb-3">
                         <button className="btn btn-info">Update Campground</button>
