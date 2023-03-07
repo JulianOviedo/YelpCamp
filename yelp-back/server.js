@@ -3,7 +3,7 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import methodOverride from 'method-override'
 import mongoose from 'mongoose'
-import Joi from 'joi'
+import campgroundSchema from './schemas.js'
 
 import catchAsync from './utils/catchAsync.js'
 import Campground from './models/campground.js';
@@ -14,6 +14,15 @@ mongoose.connect('mongodb://localhost:27017/yelp-camp', { useNewUrlParser: true,
   .catch(error => console.error('ERROR TRYING TO CONNECT MONGOOSE TO DATABASE', error));
 
 
+const validateCampground = (req,res,next) => {
+  const { error } = campgroundSchema.validate(req.body)
+  if(error) {
+    const msg = error.details.map(el => el.message).join(',')
+    throw new ExpressError(msg, 400)
+  } else {
+    next()
+  }
+}
 
 ///------****  EXPRESS  ***--------////
 
@@ -33,21 +42,7 @@ app.get('/campgrounds',catchAsync( async (req, res) => {
   res.send(campgrounds)
 }))
 
-app.post('/campgrounds', catchAsync( async (req, res, next) => {
-  const campgroundSchema = Joi.object({
-    campground : Joi.object({
-      title: Joi.string().required(),
-      price : Joi.number().min(0).required(),
-      description : Joi.string().required,
-      location : Joi.string().required(),
-      image : Joi.string().required()
-    }).required()
-  })
-  const { error } = campgroundSchema.validate(req.body)
-  if(error) {
-    const msg = error.details.map(el => el.message).join(',')
-    throw new ExpressError(msg, 400)
-  }
+app.post('/campgrounds',validateCampground, catchAsync( async (req, res, next) => {
   const newCampground = new Campground(req.body.campground)
   await newCampground.save()
   res.redirect(`${BASE_URL}/campgrounds/${newCampground._id}`)
@@ -71,9 +66,9 @@ app.delete('/campgrounds/:_id',catchAsync( async (req,res) => {
   res.redirect(`${BASE_URL}/`)
 }))
 
-// app.all('*', (req, res, next) => {
-//   next(new ExpressError('Page not found', 404))
-// })
+app.all('*', (req, res, next) => {
+  next(new ExpressError('Page not found', 404))
+})
 
 app.use((err, req, res, next) => {
   console.error(err);
