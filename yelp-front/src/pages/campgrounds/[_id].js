@@ -16,34 +16,50 @@ export default function ShowCampground({ _id }) {
     }, [_id])
 
     return (
-        <>
+        <div className="row">
             {campground && (
-                <div className="row">
-                    <div className="col-6 offset-3">
-                        <div className="card mb-3">
-                            <img src={campground.image} width={800} height={350} className="card-img-top" alt="campgroundImage"/>
-                            <div className="card-body">
-                                <h5 className="card-title">{campground.title}</h5>
-                                <p className="card-text">{campground.description}</p>
-                            </div>
-                            <ul className="list-group list-group-flush">
-                                <li className="list-group-item text-muted">{campground.location}</li>
-                                <li className="list-group-item">{'$' + campground.price}</li>
-                            </ul>
-                            <div className="card-body">
-                                <Link className="card-link btn btn-info m-1" href={`/campgrounds/${_id}/edit`}>Edit</Link>
-                                <form className="d-inline" action={`${BASE_URL}/campgrounds/${_id}?_method=DELETE`} method="POST">
-                                    <button className="btn btn-danger">Delete</button>
-                                </form>
-                            </div>
-                            <div className="card-footer text-muted">
+                <div className="col-6">
+                    <div className="card mb-3">
+                        <img src={campground.image} width={800} height={350} className="card-img-top" alt="campgroundImage" />
+                        <div className="card-body">
+                            <h5 className="card-title">{campground.title}</h5>
+                            <p className="card-text">{campground.description}</p>
+                        </div>
+                        <ul className="list-group list-group-flush">
+                            <li className="list-group-item text-muted">{campground.location}</li>
+                            <li className="list-group-item">{'$' + campground.price}</li>
+                        </ul>
+                        <div className="card-body">
+                            <Link className="card-link btn btn-info m-1" href={`/campgrounds/${_id}/edit`}>Edit</Link>
+                            <form className="d-inline" action={`${BASE_URL}/campgrounds/${_id}?_method=DELETE`} method="POST">
+                                <button className="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                        <div className="card-footer text-muted">
                                 2 days ago
-                            </div>
                         </div>
                     </div>
                 </div>
             )}
-        </>
+            <div className="col-6">
+                <h2>Leave a Review</h2>
+                <form action={`${BASE_URL}/campgrounds/${_id}/reviews`} method="POST" className="mb-3 validated-form" noValidate>
+                    <div className="mb-3">
+                        <label className="form-label" htmlFor="rating">Rating</label>
+                        <input className="form-range" type="range" min="1" max="5" name="review[rating]" id="rating"/>
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label" htmlFor="body">Review</label>
+                        <textarea className="form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
+                        <div className="valid-feedback">
+                    Looks good!
+                        </div>
+                    </div>
+                    <button className="btn btn-success">Submit</button>
+                </form>
+            </div>
+        </div>
+
     )
 }
 
