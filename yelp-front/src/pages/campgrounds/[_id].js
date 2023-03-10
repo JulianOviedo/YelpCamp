@@ -49,7 +49,7 @@ export default function ShowCampground({ _id }) {
                 <form action={`${BASE_URL}/campgrounds/${_id}/reviews`} method="POST" ref={formRef} className={isValidated ? 'was-validated' : 'form-validate' + 'mb-3'} noValidate>
                     <div className="mb-3">
                         <label className="form-label" htmlFor="rating">Rating</label>
-                        <input className="form-range" type="range" min="1" max="5" name="review[rating]" id="rating"/>
+                        <input className="form-range" type="range" min="1" max="5" name="review[rating]" id="rating" required/>
                     </div>
                     <div className="mb-3">
                         <label className="form-label" htmlFor="body">Review</label>
