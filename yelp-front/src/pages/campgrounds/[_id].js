@@ -1,3 +1,4 @@
+import useFormValidation from '@/hooks/useValidateForm'
 import axios from 'axios'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
@@ -14,6 +15,8 @@ export default function ShowCampground({ _id }) {
         }
         fetchCampgroundDetails()
     }, [_id])
+
+    const [formRef, isValidated] = useFormValidation()
 
     return (
         <div className="row">
@@ -43,7 +46,7 @@ export default function ShowCampground({ _id }) {
             )}
             <div className="col-6">
                 <h2>Leave a Review</h2>
-                <form action={`${BASE_URL}/campgrounds/${_id}/reviews`} method="POST" className="mb-3 validated-form" noValidate>
+                <form action={`${BASE_URL}/campgrounds/${_id}/reviews`} method="POST" ref={formRef} className={isValidated ? 'was-validated' : 'form-validate' + 'mb-3'} noValidate>
                     <div className="mb-3">
                         <label className="form-label" htmlFor="rating">Rating</label>
                         <input className="form-range" type="range" min="1" max="5" name="review[rating]" id="rating"/>
