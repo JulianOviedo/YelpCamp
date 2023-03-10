@@ -7,6 +7,7 @@ import campgroundSchema from './schemas.js'
 
 import catchAsync from './utils/catchAsync.js'
 import Campground from './models/campground.js';
+import Review from './models/review.js'
 import ExpressError from './utils/ExpressError.js'
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp', { useNewUrlParser: true, useUnifiedTopology: true })
@@ -47,6 +48,18 @@ app.post('/campgrounds',validateCampground, catchAsync( async (req, res, next) =
   await newCampground.save()
   res.redirect(`${BASE_URL}/campgrounds/${newCampground._id}`)
 }))
+
+app.post('/campgrounds/:_id/reviews', async (req, res) => {
+  const {_id} = req.params
+  const campground = await Campground.findById(_id)
+  const newReview = new Review(req.body.review)
+  campground.review.push(newReview)
+  await newReview.save()
+  await campground.save()
+  console.log(campground)
+  res.redirect(`${BASE_URL}/campgrounds/${_id }`)
+
+})
 
 
 app.get('/campgrounds/:_id',catchAsync( async (req, res ) => {
