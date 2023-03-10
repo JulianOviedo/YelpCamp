@@ -60,7 +60,7 @@ export default function ShowCampground({ _id }) {
                     </div>
                     <button className="btn btn-success">Submit</button>
                 </form>
-                {campground.review !== [] && campground.review.length > 0 && (
+                {campground.review && campground.review.length > 0 && (
                     campground.review.map(r => (
                         <div key={r._id} className="card mb-3 ">
                             <div className="card-body">
