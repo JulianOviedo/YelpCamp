@@ -14,7 +14,7 @@ export default function CampgroundCard ({ image, title, description, location, i
                         <p className='card-text'>
                             <small className='text-muted'>{location}</small>
                         </p>
-                        <Link className='btn btn-primary' href={`/campgrounds/${id}`}>View Campground</Link>
+                        <Link className='btn btn-primary' href={`/campgrounds/${id}`}>{`View ${title}`}</Link>
                     </div>
                 </div>
             </div>
