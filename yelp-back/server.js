@@ -3,7 +3,7 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import methodOverride from 'method-override'
 import mongoose from 'mongoose'
-import campgroundSchema from './schemas.js'
+import {campgroundSchema, reviewSchema} from './schemas.js'
 
 import catchAsync from './utils/catchAsync.js'
 import Campground from './models/campground.js';
@@ -19,6 +19,16 @@ const validateCampground = (req,res,next) => {
   const { error } = campgroundSchema.validate(req.body)
   if(error) {
     const msg = error.details.map(el => el.message).join(',')
+    throw new ExpressError(msg, 400)
+  } else {
+    next()
+  }
+}
+
+const validateReview = (req,res,next) => {
+  const {error} = reviewSchema.validate(req.body)
+  if(error) {
+    const msg = error.detail.map(el => el.message).join('.')
     throw new ExpressError(msg, 400)
   } else {
     next()
@@ -49,7 +59,7 @@ app.post('/campgrounds',validateCampground, catchAsync( async (req, res, next) =
   res.redirect(`${BASE_URL}/campgrounds/${newCampground._id}`)
 }))
 
-app.post('/campgrounds/:_id/reviews', async (req, res) => {
+app.post('/campgrounds/:_id/reviews', validateReview, async (req, res) => {
   const {_id} = req.params
   const campground = await Campground.findById(_id)
   const newReview = new Review(req.body.review)
@@ -57,7 +67,6 @@ app.post('/campgrounds/:_id/reviews', async (req, res) => {
   await newReview.save()
   await campground.save()
   res.redirect(`${BASE_URL}/campgrounds/${_id }`)
-
 })
 
 
