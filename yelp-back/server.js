@@ -63,6 +63,8 @@ app.post('/campgrounds/:_id/reviews', validateReview, async (req, res) => {
   const { _id } = req.params
   const campground = await Campground.findById(_id)
   const newReview = new Review(req.body.review)
+
+  console.log(newReview)
   campground.review.push(newReview)
   await newReview.save()
   await campground.save()
@@ -71,7 +73,7 @@ app.post('/campgrounds/:_id/reviews', validateReview, async (req, res) => {
 
 
 app.get('/campgrounds/:_id', catchAsync(async (req, res) => {
-  const campground = await Campground.findById(req.params._id)
+  const campground = await Campground.findById(req.params._id).populate('review')
   res.send({ campground })
 }))
 
