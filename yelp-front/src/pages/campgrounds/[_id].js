@@ -66,7 +66,7 @@ export default function ShowCampground({ _id }) {
                             <div className="card-body">
                                 <h5 className="card-title">{`Rating : ${r.rating}`}</h5>
                                 <p className="card-text">{`Review : ${r.body}`}</p>
-                                <form action="/campgrounds/<%=campground._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
+                                <form action={`${BASE_URL}/campgrounds/${_id}/reviews/${r._id}?_method=DELETE`} method="POST">
                                     <button className="btn btn-sm btn-danger">Delete</button>
                                 </form>
                             </div>

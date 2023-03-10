@@ -63,14 +63,11 @@ app.post('/campgrounds/:_id/reviews', validateReview, async (req, res) => {
   const { _id } = req.params
   const campground = await Campground.findById(_id)
   const newReview = new Review(req.body.review)
-
-  console.log(newReview)
   campground.review.push(newReview)
   await newReview.save()
   await campground.save()
   res.redirect(`${BASE_URL}/campgrounds/${_id}`)
 })
-
 
 app.get('/campgrounds/:_id', catchAsync(async (req, res) => {
   const campground = await Campground.findById(req.params._id).populate('review')
@@ -87,6 +84,13 @@ app.delete('/campgrounds/:_id', catchAsync(async (req, res) => {
   const { _id } = req.params
   await Campground.findByIdAndDelete(_id)
   res.redirect(`${BASE_URL}/`)
+}))
+
+app.delete('/campgrounds/:_id/reviews/:reviewId', catchAsync(async (req, res, next) => {
+  const { _id, reviewId } = req.params
+  await Campground.findByIdAndUpdate(_id, { $pull: { reviews: reviewId } })
+  await Review.findByIdAndDelete(reviewId)
+  res.redirect(`${BASE_URL}/campgrounds/${_id}`)
 }))
 
 app.all('*', (req, res, next) => {
