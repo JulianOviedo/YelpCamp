@@ -1,8 +1,8 @@
 export default function NavBar() {
     return (
         <nav className="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-            <a className="navbar-brand">YelpCamp</a>
             <div className="container-fluid">
+                <a className="navbar-brand">YelpCamp</a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
