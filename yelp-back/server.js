@@ -56,7 +56,6 @@ app.post('/campgrounds/:_id/reviews', async (req, res) => {
   campground.review.push(newReview)
   await newReview.save()
   await campground.save()
-  console.log(campground)
   res.redirect(`${BASE_URL}/campgrounds/${_id }`)
 
 })
