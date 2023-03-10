@@ -2,7 +2,7 @@ import mongoose from "mongoose"
 const Schema = mongoose.Schema
 
 const ReviewSchema = {
-    title: String,
+    body: String,
     rating: Number
 }
 
