@@ -3,27 +3,14 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import methodOverride from 'method-override'
 import mongoose from 'mongoose'
-import { campgroundSchema, reviewSchema } from './schemas.js'
 
-import catchAsync from './utils/catchAsync.js'
-import Campground from './models/campground.js';
-import Review from './models/review.js'
 import ExpressError from './utils/ExpressError.js'
 import campgrounds from './routes/campgrounds.js'
+import reviews from './routes/reviews.js'
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('DATABASE IS CONNECTED'))
   .catch(error => console.error('ERROR TRYING TO CONNECT MONGOOSE TO DATABASE', error));
-
-const validateReview = (req, res, next) => {
-  const { error } = reviewSchema.validate(req.body)
-  if (error) {
-    const msg = error.details.map(el => el.message).join('.')
-    throw new ExpressError(msg, 400)
-  } else {
-    next()
-  }
-}
 
 ///------****  EXPRESS  ***--------////
 
@@ -35,30 +22,15 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
 app.use('/campgrounds', campgrounds)
+app.use('/campgrounds/:_id/reviews', reviews)
 
-app.listen(5000, (req, res) => {
-  console.log('server listen on port 5000')
-})
-
-app.post('/campgrounds/:_id/reviews', validateReview, async (req, res) => {
-  const { _id } = req.params
-  const campground = await Campground.findById(_id)
-  const newReview = new Review(req.body.review)
-  campground.review.push(newReview)
-  await newReview.save()
-  await campground.save()
-  res.redirect(`${BASE_URL}/campgrounds/${_id}`)
-})
-
-app.delete('/campgrounds/:_id/reviews/:reviewId', catchAsync(async (req, res, next) => {
-  const { _id, reviewId } = req.params
-  await Campground.findByIdAndUpdate(_id, { $pull: { reviews: reviewId } })
-  await Review.findByIdAndDelete(reviewId)
-  res.redirect(`${BASE_URL}/campgrounds/${_id}`)
-}))
 
 app.all('*', (req, res, next) => {
   next(new ExpressError('Page not found', 404))
+})
+
+app.listen(5000, (req, res) => {
+  console.log('server listen on port 5000')
 })
 
 app.use((err, req, res, next) => {
