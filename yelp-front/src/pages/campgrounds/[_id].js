@@ -58,7 +58,7 @@ export default function ShowCampground({ _id }) {
                             Looks good!
                         </div>
                     </div>
-                    <button className="btn btn-success">Submit</button>
+                    <button className="btn btn-success mb-3">Submit</button>
                 </form>
                 {campground.review && campground.review.length > 0 && (
                     campground.review.map(r => (
