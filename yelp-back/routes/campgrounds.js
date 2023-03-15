@@ -6,7 +6,7 @@ import ExpressError from '../utils/ExpressError.js'
 
 const router = express.Router()
 const BASE_URL = 'http://localhost:3000'
-  
+
 
 
 const validateCampground = (req, res, next) => {
@@ -27,7 +27,7 @@ router.get('/', catchAsync(async (req, res) => {
 router.post('/', validateCampground, catchAsync(async (req, res, next) => {
     const newCampground = new Campground(req.body.campground)
     await newCampground.save()
-    res.redirect(`${BASE_URL}/campgrounds/${newCampground._id}`)
+    res.json({ newCampgroundId: newCampground._id });
 }))
 
 router.get('/:_id', catchAsync(async (req, res) => {
