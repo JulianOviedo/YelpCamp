@@ -15,7 +15,7 @@ mongoose.connect('mongodb://localhost:27017/yelp-camp', { useNewUrlParser: true,
 
 ///------****  EXPRESS  ***--------////
 
-const BASE_URL = 'http://localhost:3000'
+const BASE_URL = 'http://localhost:3000/'
 const app = express()
 
 const sessionConfig = {
@@ -30,7 +30,12 @@ const sessionConfig = {
 }
 app.use(session(sessionConfig))
 
-app.use(cors())
+const corsOptions ={
+  origin:'*', 
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200
+}
+app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
@@ -47,6 +52,11 @@ app.listen(5000, (req, res) => {
 })
 
 app.use((err, req, res, next) => {
-  console.error(err);
-  res.redirect(`${BASE_URL}/error?statusCode=${err.statusCode}&message=${err.message}&stack=${err.stack}`);
+  console.error('error desde el back', err);
+  res.status(500).json({
+    statusCode: err.statusCode,
+    message: err.message,
+    stack: err.stack
+  });
+  // res.redirect(`${BASE_URL}/error?statusCode=${err.statusCode}&message=${err.message}&stack=${err.stack}`);
 }); 
