@@ -3,6 +3,7 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import methodOverride from 'method-override'
 import mongoose from 'mongoose'
+import session from 'express-session'
 
 import ExpressError from './utils/ExpressError.js'
 import campgrounds from './routes/campgrounds.js'
@@ -16,6 +17,18 @@ mongoose.connect('mongodb://localhost:27017/yelp-camp', { useNewUrlParser: true,
 
 const BASE_URL = 'http://localhost:3000'
 const app = express()
+
+const sessionConfig = {
+  secret: 'thisshouldbeabettersecret!',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+      httpOnly: true,
+      expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+      maxAge: 1000 * 60 * 60 * 24 * 7
+  }
+}
+app.use(session(sessionConfig))
 
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
