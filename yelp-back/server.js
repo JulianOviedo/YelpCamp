@@ -52,11 +52,10 @@ app.listen(5000, (req, res) => {
 })
 
 app.use((err, req, res, next) => {
-  console.error('error desde el back', err);
+  console.error('ERROR !', err);
   res.status(500).json({
     statusCode: err.statusCode,
     message: err.message,
     stack: err.stack
   });
-  // res.redirect(`${BASE_URL}/error?statusCode=${err.statusCode}&message=${err.message}&stack=${err.stack}`);
 }); 
