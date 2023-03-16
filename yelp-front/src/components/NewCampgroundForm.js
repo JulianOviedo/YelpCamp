@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import useFormValidation from '@/hooks/useValidateForm'
 import useNewCampgroundForm from '@/hooks/useNewCampgroundForm'
+import LoadingButton from './LoadingButton'
 
 export default function NewCampgroundForm() {
     const [formRef, isValidated] = useFormValidation()
@@ -14,7 +15,7 @@ export default function NewCampgroundForm() {
                     <form ref={formRef} onSubmit={handleSubmit} noValidate className={isValidated ? 'was-validated' : 'form-validate'} >
                         <div className="mb-3">
                             <label className="form-label" htmlFor="title">Title</label>
-                            <input className="form-control" type="text" id="title" name="campground[title]" required onChange={handleInputChage} />
+                            <input className="form-control" type="text" name="campground[title]" required onChange={handleInputChage} />
                             <div className='valid-feedback'>
                                 Looks Good!
                             </div>
@@ -52,7 +53,7 @@ export default function NewCampgroundForm() {
                             </div>
                         </div>
                         <div className="mb-3">
-                            <button className="btn btn-success">Add Campground</button>
+                            {isValidated ? <LoadingButton value='   Saving Campground...'/> : <button className="btn btn-success">Add Campground</button>}
                         </div>
                     </form>
                     <Link href='/'>Back to Home</Link>
