@@ -1,15 +1,14 @@
 import Link from 'next/link'
 import useFormValidation from '@/hooks/useValidateForm'
 
-export default function EditCampgroundForm ({ id, title, location, imageUrl, price, description, onChange }) {
-    const BASE_URL = 'http://localhost:5000'
+export default function EditCampgroundForm ({ id, title, location, imageUrl, price, description, onChange, onSubmit }) {
     const [formRef, isValidated] = useFormValidation()
 
     return (
         <div className="row">
             <h1 className="text-center">Edit Campground</h1>
             <div className="col-6 offset-3">
-                <form ref={formRef} action={`${BASE_URL}/campgrounds/${id}?_method=PUT`} method="POST" noValidate className={isValidated ? 'was-validated' : 'form-validate'}>
+                <form ref={formRef} onSubmit={onSubmit} noValidate className={isValidated ? 'was-validated' : 'form-validate'}>
                     <div className="mb-3">
                         <label className="form-label" htmlFor="title">Title</label>
                         <input className="form-control" type="text" id="title" name="campground[title]"
