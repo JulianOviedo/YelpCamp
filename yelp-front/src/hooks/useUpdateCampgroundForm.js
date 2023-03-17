@@ -19,7 +19,7 @@ export default function useUpdateCampgroundForm ({ _id, campground }) {
         })
             .catch(err => {
                 const { statusCode, message, stack } = err.response.data
-                toast.error('Ooops ! Something went wrong ... Try again later')
+                toast.error('Ooops ! Something went wrong ...')
                 window.location.href = `/error?statusCode=${statusCode}&message=${message}&stack=${stack}`
             })
     }
