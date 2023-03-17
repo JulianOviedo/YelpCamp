@@ -1,34 +1,25 @@
-import CampgroundCard from '@/components/CampgroundCard'
-import getCampgrounds from '@/helpers/getCampgrouds'
-import Link from 'next/link'
-
-// const BASE_URL = 'http://localhost:5000'
-
-export async function getServerSideProps() {
-    const campgrounds = await getCampgrounds()
-    return {
-        props: {
-            campgrounds
-        }
-    }
-}
-
-export default function Home({ campgrounds }) {
+export default function LogIn () {
     return (
         <>
-            <h1>All Campgrounds</h1>
-            <Link href='/campgrounds/new'>Add Campground</Link>
-            <div>
-                {campgrounds.map(camp => (
-                    <CampgroundCard
-                        key={camp._id}
-                        id={camp._id}
-                        image={camp.image}
-                        title={camp.title}
-                        description={camp.description}
-                        location={camp.location} />
-                ))}
-            </div>
+            <h1>Login</h1>
+            <form action="/login" method="POST" className="validated-form" noValidate>
+                <div className="mb-3">
+                    <label className="form-label" htmlFor="username">Username</label>
+                    <input className="form-control" type="text" id="username" name="username" required/>
+                    <div className="valid-feedback">
+            Looks good!
+                    </div>
+                </div>
+
+                <div className="mb-3">
+                    <label className="form-label" htmlFor="password">Password</label>
+                    <input className="form-control" type="password" id="password" name="password" required/>
+                    <div className="valid-feedback">
+            Looks good!
+                    </div>
+                </div>
+                <button className="btn btn-success">Login</button>
+            </form>
         </>
     )
 }
