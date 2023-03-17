@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 
@@ -6,6 +7,7 @@ const BASE_URL = 'http://localhost:5000'
 
 export default function useNewCampgroundForm() {
     const [inputInfo, setInputInfo] = useState({})
+    const router = useRouter()
 
     const handleInputChage = (e) => {
         const target = e.target
@@ -30,13 +32,13 @@ export default function useNewCampgroundForm() {
             .then(response => {
                 if (response.status === 200) {
                     toast.success('Campground added successfully !')
-                    window.location.href = `/campgrounds/${response.data.newCampgroundId}`
+                    router.push(`/campgrounds/${response.data.newCampgroundId}`)
                 }
             })
             .catch(err => {
                 const { statusCode, message, stack } = err.response.data
                 toast.error('Ooops ! Something went wrong ... Try again later')
-                window.location.href = `/error?statusCode=${statusCode}&message=${message}&stack=${stack}`
+                router.push(`/error?statusCode=${statusCode}&message=${message}&stack=${stack}`)
             })
     }
 

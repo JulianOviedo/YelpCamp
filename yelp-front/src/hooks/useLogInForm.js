@@ -1,21 +1,19 @@
 import axios from 'axios'
-import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 
-const BASE_URL = 'http://localhost:5000'
+export default function useLogInForm () {
+    const BASE_URL = 'http://localhost:5000'
 
-export default function useReviewForm({ _id }) {
-    const [reviewInfo, setReviewInfo] = useState({})
-    const router = useRouter()
+    const [logInInfo, setLogInInfo] = useState({})
 
     const handleInputChange = (e) => {
         const target = e.target
         const name = target.name
         const value = target.value
 
-        setReviewInfo({
-            ...reviewInfo,
+        setLogInInfo({
+            ...logInInfo,
             [name]: value
         }
         )
@@ -23,7 +21,7 @@ export default function useReviewForm({ _id }) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post(`${BASE_URL}/campgrounds/${_id}/reviews`, reviewInfo,
+        axios.post(`${BASE_URL}/user`, logInInfo,
             {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -32,17 +30,14 @@ export default function useReviewForm({ _id }) {
             .then(response => {
                 if (response.status === 200) {
                     toast.success('Review added successfully !')
-                    router.push(`/campgrounds/${response.data.reviewedCampgroundId}`)
+                    // window.location.href = `/campgrounds/${response.data.reviewedCampgroundId}`
                 }
             })
             .catch(err => {
                 const { statusCode, message, stack } = err.response.data
                 toast.error('Ooops ! Something went wrong ... ')
-                router.push(`/error?statusCode=${statusCode}&message=${message}&stack=${stack}`)
+                window.location.href = `/error?statusCode=${statusCode}&message=${message}&stack=${stack}`
             })
     }
-
-    return {
-        handleInputChange, handleSubmit
-    }
+    return { handleInputChange, handleSubmit }
 }

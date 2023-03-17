@@ -37,15 +37,13 @@ export default function useSignUpForm () {
                     router.push('/')
                 }
                 if (response.data.err) {
-                    const err = response.data.err.message
-                    console.log('erorr')
-                    return toast.error(err)
+                    return toast.error(response.data.err.message)
                 }
             })
             .catch(err => {
                 const { statusCode, message, stack } = err.response.data
                 toast.error('Ooops ! Something went wrong ... Try again later')
-                window.location.href = `/error?statusCode=${statusCode}&message=${message}&stack=${stack}`
+                router.push(`/error?statusCode=${statusCode}&message=${message}&stack=${stack}`)
             })
     }
 

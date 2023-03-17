@@ -1,8 +1,10 @@
 import axios from 'axios'
+import { useRouter } from 'next/router'
 import { toast } from 'react-hot-toast'
 
 export default function useUpdateCampgroundForm ({ _id, campground }) {
     const BASE_URL = 'http://localhost:5000'
+    const router = useRouter()
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -14,13 +16,13 @@ export default function useUpdateCampgroundForm ({ _id, campground }) {
             }).then(response => {
             if (response.status === 200) {
                 toast.success('Campground updated successfully !')
-                window.location.href = `/campgrounds/${response.data.updatedCampgroundId}`
+                router.push(`/campgrounds/${response.data.updatedCampgroundId}`)
             }
         })
             .catch(err => {
                 const { statusCode, message, stack } = err.response.data
                 toast.error('Ooops ! Something went wrong ...')
-                window.location.href = `/error?statusCode=${statusCode}&message=${message}&stack=${stack}`
+                router.push(`/error?statusCode=${statusCode}&message=${message}&stack=${stack}`)
             })
     }
 
