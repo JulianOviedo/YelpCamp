@@ -32,7 +32,7 @@ export default function useReviewForm({ _id }) {
             .then(response => {
                 if (response.status === 200) {
                     toast.success('Review added successfully !')
-                    router.push(`/campgrounds/${response.data.reviewedCampgroundId}`)
+                    router.reload()
                 }
             })
             .catch(err => {

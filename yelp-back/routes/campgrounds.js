@@ -45,7 +45,7 @@ router.put('/:_id', catchAsync(async (req, res) => {
 router.delete('/:_id', catchAsync(async (req, res) => {
     const { _id } = req.params
     await Campground.findByIdAndDelete(_id)
-    res.redirect(`${BASE_URL}/`)
+    res.redirect(`${BASE_URL}/home`)
 }))
 
 export default router
