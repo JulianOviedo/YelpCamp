@@ -1,9 +1,11 @@
 import EditCampgroundForm from '@/components/EditCampgroundForm'
+import useUpdateCampgroundForm from '@/hooks/useUpdateCampgroundForm'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 
 export default function EditCampground({ _id }) {
     const [campground, setCampground] = useState({})
+    const { handleSubmit } = useUpdateCampgroundForm({ _id, campground })
 
     useEffect(() => {
         const fetchCampgroundDetails = async () => {
@@ -31,6 +33,7 @@ export default function EditCampground({ _id }) {
                 location={campground.location}
                 price={campground.price}
                 onChange={handleChange}
+                onSubmit={handleSubmit}
             />
         </>
     )
