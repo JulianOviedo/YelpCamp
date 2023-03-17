@@ -4,11 +4,16 @@ import cors from 'cors'
 import methodOverride from 'method-override'
 import mongoose from 'mongoose'
 import session from 'express-session'
+import LocalStrategy from 'passport-local'
+import passport from 'passport'
+import User from './models/user.js'
 
 import ExpressError from './utils/ExpressError.js'
-import campgrounds from './routes/campgrounds.js'
-import reviews from './routes/reviews.js'
+import campgroundsRoutes from './routes/campgrounds.js'
+import reviewsRoutes from './routes/reviews.js'
+import userRoutes from './routes/user.js'
 
+mongoose.set('strictQuery', false)
 mongoose.connect('mongodb://localhost:27017/yelp-camp', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('DATABASE IS CONNECTED'))
   .catch(error => console.error('ERROR TRYING TO CONNECT MONGOOSE TO DATABASE', error));
@@ -30,17 +35,21 @@ const sessionConfig = {
 }
 app.use(session(sessionConfig))
 
-const corsOptions ={
-  origin:'*', 
-  credentials:true,            //access-control-allow-credentials:true
-  optionSuccessStatus:200
-}
-app.use(cors(corsOptions));
+app.use(passport.initialize())
+app.use(passport.session())
+passport.use(new LocalStrategy(User.authenticate()))
+
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
+
+app.use(cors());
+
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
-app.use('/campgrounds', campgrounds)
-app.use('/campgrounds/:_id/reviews', reviews)
+app.use('/user', userRoutes)
+app.use('/campgrounds', campgroundsRoutes)
+app.use('/campgrounds/:_id/reviews', reviewsRoutes)
 
 
 app.all('*', (req, res, next) => {
