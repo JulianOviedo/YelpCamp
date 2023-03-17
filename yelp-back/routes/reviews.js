@@ -25,7 +25,7 @@ router.post('/', validateReview, async (req, res) => {
     campground.review.push(newReview)
     await newReview.save()
     await campground.save()
-    res.redirect(`${BASE_URL}/campgrounds/${_id}`)
+    res.json({ reviewedCampgroundId: _id });
 })
 
 router.delete('/:reviewId', catchAsync(async (req, res, next) => {

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import useFormValidation from '@/hooks/useValidateForm'
+import LoadingButton from './LoadingButton'
 
 export default function EditCampgroundForm ({ id, title, location, imageUrl, price, description, onChange, onSubmit }) {
     const [formRef, isValidated] = useFormValidation()
@@ -54,7 +55,7 @@ export default function EditCampgroundForm ({ id, title, location, imageUrl, pri
                         </div>
                     </div>
                     <div className="mb-3">
-                        <button className="btn btn-info">Update Campground</button>
+                        {isValidated ? <LoadingButton value='   Updating Campground...'/> : <button className="btn btn-info">Update Campground</button>}
                     </div>
                 </form>
                 <Link href={`/campgrounds/${id}`}>Go back</Link>

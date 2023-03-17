@@ -1,3 +1,5 @@
+import LoadingButton from '@/components/LoadingButton'
+import useReviewForm from '@/hooks/useReviewForm'
 import useFormValidation from '@/hooks/useValidateForm'
 import axios from 'axios'
 import Link from 'next/link'
@@ -5,6 +7,7 @@ import { useEffect, useState } from 'react'
 
 export default function ShowCampground({ _id }) {
     const [campground, setCampground] = useState({})
+    const { handleSubmit, handleInputChange } = useReviewForm({ _id })
 
     const BASE_URL = 'http://localhost:5000'
 
@@ -46,19 +49,19 @@ export default function ShowCampground({ _id }) {
             )}
             <div className="col-6">
                 <h2>Leave a Review</h2>
-                <form action={`${BASE_URL}/campgrounds/${_id}/reviews`} method="POST" ref={formRef} className={isValidated ? 'was-validated' : 'form-validate mb-3'} noValidate>
+                <form onSubmit={handleSubmit} ref={formRef} className={isValidated ? 'was-validated' : 'form-validate mb-3'} noValidate>
                     <div className="mb-3">
                         <label className="form-label" htmlFor="rating">Rating</label>
-                        <input className="form-range" type="range" min="1" max="5" name="review[rating]" id="rating" required />
+                        <input className="form-range" type="range" min="1" max="5" name="review[rating]" onChange={handleInputChange} required />
                     </div>
                     <div className="mb-3">
                         <label className="form-label" htmlFor="body">Review</label>
-                        <textarea className="form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
+                        <textarea className="form-control" name="review[body]" onChange={handleInputChange} cols="30" rows="3" required></textarea>
                         <div className="valid-feedback">
                             Looks good!
                         </div>
                     </div>
-                    <button className="btn btn-success mb-3">Submit</button>
+                    {isValidated ? <LoadingButton value='   Saving Review...'/> : <button className="btn btn-success mb-3">Submit</button>}
                 </form>
                 {campground.review && campground.review.length > 0 && (
                     campground.review.map(r => (
