@@ -1,12 +1,14 @@
 import useSignUpForm from '@/hooks/useSignUpForm'
+import useFormValidation from '@/hooks/useValidateForm'
 
 export default function SignUp () {
     const { handleSubmit, handleInputChange } = useSignUpForm()
+    const [formRef, isValidated] = useFormValidation()
 
     return (
         <>
             <h1>Sign Up</h1>
-            <form onSubmit={handleSubmit} className="validated-form" noValidate>
+            <form onSubmit={handleSubmit} ref={formRef} noValidate className={isValidated ? 'was-validated' : 'form-validate'}>
                 <div className="mb-3">
                     <label className="form-label" htmlFor="username">Username</label>
                     <input className="form-control" type="text" id="username" name="username" required onChange={handleInputChange}/>
