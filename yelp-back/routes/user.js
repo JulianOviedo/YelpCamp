@@ -1,7 +1,9 @@
 import express from 'express'
+import passport from 'passport'
 import User from '../models/user.js'
 
 const router = express.Router()
+const BASE_URL = 'http://localhost:3000'
 
 router.post('/signUp', async (req, res) => {
     try {
@@ -17,5 +19,7 @@ router.post('/signUp', async (req, res) => {
 
 })
 
-
+router.post('/logIn', passport.authenticate('local', { failWithError: true }), async (req, res) => {
+    res.json({ qonda: 'qonda' })
+})
 export default router
