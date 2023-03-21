@@ -3,9 +3,6 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import methodOverride from 'method-override'
 import mongoose from 'mongoose'
-import session from 'express-session'
-import LocalStrategy from 'passport-local'
-import passport from 'passport'
 import User from './models/user.js'
 
 import ExpressError from './utils/ExpressError.js'
@@ -22,25 +19,6 @@ mongoose.connect('mongodb://localhost:27017/yelp-camp', { useNewUrlParser: true,
 
 const BASE_URL = 'http://localhost:3000/'
 const app = express()
-
-const sessionConfig = {
-  secret: 'thisshouldbeabettersecret!',
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-      httpOnly: true,
-      expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-      maxAge: 1000 * 60 * 60 * 24 * 7
-  }
-}
-app.use(session(sessionConfig))
-
-app.use(passport.initialize())
-app.use(passport.session())
-passport.use(new LocalStrategy(User.authenticate()))
-
-passport.serializeUser(User.serializeUser())
-passport.deserializeUser(User.deserializeUser())
 
 app.use(cors());
 
