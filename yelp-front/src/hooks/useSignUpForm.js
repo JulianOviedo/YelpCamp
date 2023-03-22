@@ -32,18 +32,13 @@ export default function useSignUpForm () {
             .then(response => {
                 console.log(response.data)
                 if (response.data.isRegistered) {
-                    console.log('qonda')
                     toast.success('User has been created successfully !')
                     router.push('/')
                 }
-                if (response.data.err) {
-                    return toast.error(response.data.err.message)
-                }
             })
             .catch(err => {
-                const { statusCode, message, stack } = err.response.data
-                toast.error('Ooops ! Something went wrong ... Try again later')
-                router.push(`/error?statusCode=${statusCode}&message=${message}&stack=${stack}`)
+                const { message } = err.response.data.err
+                toast.error(message)
             })
     }
 

@@ -1,12 +1,11 @@
-import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { signIn } from 'next-auth/react'
 
 export default function useLogInForm () {
-    const BASE_URL = 'http://localhost:5000'
-
     const [logInInfo, setLogInInfo] = useState({})
+    const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
 
     const handleInputChange = (e) => {
@@ -23,22 +22,22 @@ export default function useLogInForm () {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post(`${BASE_URL}/user/logIn`, logInInfo,
-            {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            })
-            .then(response => {
-                if (response.status === 200) {
-                    toast.success('Logged in successfully !')
-                    router.push('/home')
-                }
-            })
-            .catch(err => {
-                console.log(err)
-                toast.error('Password or Username are incorrect')
-            })
+        signIn('github', {
+            identifier: logInInfo.email,
+            password: logInInfo.password,
+            redirect: false
+        }).then(res => {
+            if (res.ok) {
+                toast.success('Logged in succesfully')
+                setIsLoading(false)
+                router.push('/home')
+            }
+            if (!res.ok) {
+                toast.error('Wrong credentials')
+                setIsLoading(false)
+            }
+        })
     }
-    return { handleInputChange, handleSubmit }
+
+    return { handleInputChange, handleSubmit, isLoading }
 }
